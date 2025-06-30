@@ -7,71 +7,55 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the services.
-     */
     public function index()
     {
         $services = Service::all();
         return view('services.index', compact('services'));
     }
 
-    /**
-     * Show the form for creating a new service.
-     */
     public function create()
     {
         return view('services.create');
     }
 
-    /**
-     * Store a newly created service in storage.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
         ]);
 
-        Service::create($validated);
+        Service::create($request->all());
 
-        return redirect()->route('services.index')->with('success', 'Service added successfully!');
+        return redirect()->route('services.index')->with('success', 'Service created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified service.
-     */
-    public function edit($id)
+    public function show(Service $service)
     {
-        $service = Service::findOrFail($id);
+        return view('services.show', compact('service'));
+    }
+
+    public function edit(Service $service)
+    {
         return view('services.edit', compact('service'));
     }
 
-    /**
-     * Update the specified service in storage.
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Service $service)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
         ]);
 
-        $service = Service::findOrFail($id);
-        $service->update($validated);
+        $service->update($request->all());
 
-        return redirect()->route('services.index')->with('success', 'Service updated successfully!');
+        return redirect()->route('services.index')->with('success', 'Service updated successfully.');
     }
 
-    /**
-     * Remove the specified service from storage.
-     */
-    public function destroy($id)
+    public function destroy(Service $service)
     {
-        $service = Service::findOrFail($id);
         $service->delete();
 
-        return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
+        return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     }
 }
