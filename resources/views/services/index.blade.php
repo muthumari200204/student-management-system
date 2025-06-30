@@ -1,49 +1,58 @@
 @extends('layout')
 
 @section('content')
-    <h2 class="w3-text-red">Service List</h2>
+<h1>Services</h1>
 
-    {{-- Flash success message --}}
-    @if (session('success'))
-        <div class="w3-panel w3-green w3-padding">
-            {{ session('success') }}
-        </div>
-    @endif
 
-    {{-- Link to create a new service --}}
-    <a href="{{ route('services.create') }}" class="w3-button w3-green w3-margin-bottom">Add New Service</a>
 
-    {{-- Check if services exist --}}
-    @if ($services->count())
-        <table class="w3-table-all w3-hoverable w3-card-4">
-            <thead>
-                <tr class="w3-light-grey">
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($services as $service)
-                    <tr>
-                        <td>{{ $service->name }}</td>
-                        <td>{{ $service->description }}</td>
-                        <td>
-                            <a href="{{ route('services.edit', $service->id) }}" class="w3-button w3-blue w3-small">Edit</a>
+<!-- Example static success message -->
+<div class="alert alert-success">Service created successfully.</div>
 
-                            <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="w3-button w3-red w3-small" onclick="return confirm('Are you sure you want to delete this service?')">
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p class="w3-text-grey">No services found.</p>
-    @endif
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Static row 1 -->
+        <tr>
+            <td>1</td>
+            <td>Library Access</td>
+            <td>Provides full access to the digital and physical library resources.</td>
+            <td>
+                <a href="#" class="btn btn-info btn-sm">View</a>
+                <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Static row 2 -->
+        <tr>
+            <td>2</td>
+            <td>Online Classes</td>
+            <td>Access to recorded and live-streamed lectures for all courses.</td>
+            <td>
+                <a href="#" class="btn btn-info btn-sm">View</a>
+                <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Static row 3 -->
+        <tr>
+            <td>3</td>
+            <td>Career Counseling</td>
+            <td>Guidance sessions for career planning and internships.</td>
+            <td>
+                <a href="#" class="btn btn-info btn-sm">View</a>
+                <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 @endsection
